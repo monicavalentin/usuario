@@ -6,6 +6,7 @@ import com.mvalentin.usuario.infrastructure.entity.Usuario;
 import com.mvalentin.usuario.infrastructure.exceptions.ConflictException;
 import com.mvalentin.usuario.infrastructure.exceptions.ResourcesNotFoundException;
 import com.mvalentin.usuario.infrastructure.repository.UsuarioRepository;
+import com.mvalentin.usuario.infrastructure.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final UsuarioConverter usuarioConverter;
     private final PasswordEncoder passwordEncoder; /*Cripitorgrafoar senha*/
+    private final JwtUtil jwtUtil;
 
     public UsuarioDto salvaUsuario(UsuarioDto usuarioDto){
         emailExiste(usuarioDto.getEmail());
@@ -49,5 +51,23 @@ public class UsuarioService {
 
     public void deletaUsuarioByEmail(String email){
         usuarioRepository.deleteByEmail(email);
+    }
+
+    public UsuarioDto atualizaDadosUsuario(String token, UsuarioDto dto){
+        // busca do e-mail do usuário através do token( tirar a obrigatoriedade de passar o email)
+        String email  = jwtUtil.extrairEmailToken(token.substring(7));
+        // Busca os dados do usuarío no BD
+        Usuario usuarioEntity = usuarioRepository.findByEmail(email).orElseThrow(()
+                -> new ResourcesNotFoundException("E-mail não localizado"));
+
+        // Criptografia de senha
+        dto.setSenha(dto.getSenha() != null ? passwordEncoder.encode(dto.getSenha()) : null);
+
+        // Mescla os dados que recebemos na request Dto com os dados do BD)
+        Usuario usuario  = usuarioConverter.updateUsuario(dto,usuarioEntity);
+
+        // Salvau os dados do usuario convertido e  depois converte  para usuario Dto
+
+        return usuarioConverter.toUsuarioDto(usuarioRepository.save(usuario));
     }
 }

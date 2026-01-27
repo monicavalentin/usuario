@@ -122,4 +122,19 @@ public class UsuarioConverter {
                 .build();
     }
 
+    // ############################################################################
+    //         ### Seção 3: Faz as comprações dos campos antes de atualiar     ###
+    // ############################################################################
+
+    public Usuario updateUsuario(UsuarioDto usuarioDto, Usuario usuario){
+        return Usuario.builder()
+                .nome(usuarioDto.getNome() != null ? usuarioDto.getNome() : usuario.getNome())
+                .id(usuario.getId())// como o Id dificilmente irá alterar então eu vou pegar direto da entity
+                .senha(usuarioDto.getSenha() != null ? usuarioDto.getSenha() : usuario.getSenha())
+                .email(usuarioDto.getEmail() != null ? usuarioDto.getEmail() : usuario.getEmail())
+                .enderecos(usuario.getEnderecos()) // aqui vou pegar direto da entity pq não vamos alterar nesse método endereco e telefone
+                .telefones(usuario.getTelefones()) // aqui vou pegar direto da entity pq não vamos alterar nesse método endereco e telefone
+                .build();
+    }
+
 }
