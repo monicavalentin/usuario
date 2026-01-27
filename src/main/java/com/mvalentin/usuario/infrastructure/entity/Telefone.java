@@ -5,10 +5,10 @@ import lombok.*;
 
 @Getter
 @Setter
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Entity
 @Table(name = "telefone")
 public class Telefone {
 

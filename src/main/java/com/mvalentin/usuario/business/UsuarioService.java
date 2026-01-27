@@ -41,9 +41,10 @@ public class UsuarioService {
         return usuarioRepository.existsByEmail(email);
     }
 
-    public Usuario buscaUsuarioByEmail(String email){
-        return usuarioRepository.findByEmail(email).orElseThrow(
+    public UsuarioDto buscaUsuarioByEmail(String email){
+        Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow(
                 () -> new ResourcesNotFoundException("Email não cadastrado" + email));
+                return usuarioConverter.toUsuarioDto(usuario);
     }
 
     public void deletaUsuarioByEmail(String email){
