@@ -21,4 +21,3 @@ public class UsuarioDto {
     private List<TelefoneDto> telefones;
     private List<EnderecoDto> enderecos;
 }
-

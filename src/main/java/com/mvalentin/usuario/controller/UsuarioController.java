@@ -2,17 +2,15 @@ package com.mvalentin.usuario.controller;
 
 import com.mvalentin.usuario.business.UsuarioService;
 import com.mvalentin.usuario.business.dto.UsuarioDto;
-import com.mvalentin.usuario.infrastructure.entity.Usuario;
 import com.mvalentin.usuario.infrastructure.repository.UsuarioRepository;
 import com.mvalentin.usuario.infrastructure.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
 
 @RestController
 @RequestMapping("/usuario")
@@ -24,9 +22,22 @@ public class UsuarioController {
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
 
-    @PostMapping
+
+    // Método simples com retorno de status code 200
+   /* @PostMapping
     public ResponseEntity<UsuarioDto> salvaUsuario(@RequestBody UsuarioDto usuarioDto){
         return ResponseEntity.ok(usuarioService.salvaUsuario(usuarioDto));
+    }*/
+
+    // Método  com retorno de status code 201 created que é o correto para salvar usuário
+
+    @PostMapping
+    public ResponseEntity<UsuarioDto> salvaUsuario(@RequestBody UsuarioDto usuarioDto) {
+        // 1. CHAMA O SERVICE: É aqui que a mágica (validação, senha, save) acontece
+        UsuarioDto usuarioSalvo = usuarioService.salvaUsuario(usuarioDto);
+
+        // 2. RETORNA A RESPOSTA: Com o objeto que o Service processou e salvou
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioSalvo);
     }
 
     // Criação  do método  de login
