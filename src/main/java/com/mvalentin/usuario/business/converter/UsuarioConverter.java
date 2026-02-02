@@ -96,6 +96,7 @@ public class UsuarioConverter {
      */
     public EnderecoDto toEnderecoDto(Endereco endereco){
         return EnderecoDto.builder()
+                .id(endereco.getId())
                 .rua(endereco.getRua())
                 .numero(endereco.getNumero())
                 .cidade(endereco.getCidade())
@@ -137,4 +138,15 @@ public class UsuarioConverter {
                 .build();
     }
 
-}
+    public Endereco updateEndereco(EnderecoDto enderecoDto, Endereco endereco){
+        return Endereco.builder()
+                .id(endereco.getId())
+                .rua(enderecoDto.getRua() != null ? enderecoDto.getRua() : endereco.getRua())
+                .numero(enderecoDto.getNumero() != null ? enderecoDto.getNumero() : endereco.getNumero())
+                .cidade(enderecoDto.getCidade() != null ? enderecoDto.getCidade() : endereco.getCidade())
+                .complemento(enderecoDto.getComplemento() != null ? enderecoDto.getComplemento() : endereco.getComplemento())
+                .cep(enderecoDto.getCep() != null ? enderecoDto.getCep() : endereco.getCep())
+                .estado(enderecoDto.getEstado() != null ? enderecoDto.getEstado() : endereco.getEstado())
+                .build();
+    }
+ }

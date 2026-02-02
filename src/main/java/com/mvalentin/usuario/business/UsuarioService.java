@@ -1,10 +1,14 @@
 package com.mvalentin.usuario.business;
 
 import com.mvalentin.usuario.business.converter.UsuarioConverter;
+import com.mvalentin.usuario.business.dto.EnderecoDto;
+import com.mvalentin.usuario.business.dto.TelefoneDto;
 import com.mvalentin.usuario.business.dto.UsuarioDto;
+import com.mvalentin.usuario.infrastructure.entity.Endereco;
 import com.mvalentin.usuario.infrastructure.entity.Usuario;
 import com.mvalentin.usuario.infrastructure.exceptions.ConflictException;
-import com.mvalentin.usuario.infrastructure.exceptions.ResourcesNotFoundException;
+import com.mvalentin.usuario.infrastructure.exceptions.ResourceNotFoundException;
+import com.mvalentin.usuario.infrastructure.repository.EnderecoRepository;
 import com.mvalentin.usuario.infrastructure.repository.UsuarioRepository;
 import com.mvalentin.usuario.infrastructure.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +23,7 @@ public class UsuarioService {
     private final UsuarioConverter usuarioConverter;
     private final PasswordEncoder passwordEncoder; /*Cripitorgrafoar senha*/
     private final JwtUtil jwtUtil;
+    private final EnderecoRepository enderecoRepository;
 
     public UsuarioDto salvaUsuario(UsuarioDto usuarioDto){
         emailExiste(usuarioDto.getEmail());
@@ -45,7 +50,7 @@ public class UsuarioService {
 
     public UsuarioDto buscaUsuarioByEmail(String email){
         Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow(
-                () -> new ResourcesNotFoundException("Email não cadastrado" + email));
+                () -> new ResourceNotFoundException("Email não cadastrado" + email));
                 return usuarioConverter.toUsuarioDto(usuario);
     }
 
@@ -58,7 +63,7 @@ public class UsuarioService {
         String email  = jwtUtil.extrairEmailToken(token.substring(7));
         // Busca os dados do usuarío no BD
         Usuario usuarioEntity = usuarioRepository.findByEmail(email).orElseThrow(()
-                -> new ResourcesNotFoundException("E-mail não localizado"));
+                -> new ResourceNotFoundException("E-mail não localizado"));
 
         // Criptografia de senha
         dto.setSenha(dto.getSenha() != null ? passwordEncoder.encode(dto.getSenha()) : null);
@@ -69,5 +74,13 @@ public class UsuarioService {
         // Salvau os dados do usuario convertido e  depois converte  para usuario Dto
 
         return usuarioConverter.toUsuarioDto(usuarioRepository.save(usuario));
+    }
+    // IMPORTANTE após revisar faço o commit e só então faça  para ao telefone
+    // parei aqui preciso revisar tudo que fiz para o endereço para fazer o mesmo  para telefone
+        public EnderecoDto atualizaDadosEndereco(Long idEndereco, EnderecoDto enderecoDto){
+        Endereco endereco = enderecoRepository.findById(idEndereco).orElseThrow(() ->
+                 new ResourceNotFoundException("Id endereço não encotnardo" + idEndereco));
+        Endereco enderecoConvertido = usuarioConverter.updateEndereco(enderecoDto,endereco);
+        return usuarioConverter.toEnderecoDto(enderecoRepository.save(enderecoConvertido));
     }
 }

@@ -1,7 +1,9 @@
 package com.mvalentin.usuario.controller;
 
 import com.mvalentin.usuario.business.UsuarioService;
+import com.mvalentin.usuario.business.dto.EnderecoDto;
 import com.mvalentin.usuario.business.dto.UsuarioDto;
+import com.mvalentin.usuario.infrastructure.repository.EnderecoRepository;
 import com.mvalentin.usuario.infrastructure.repository.UsuarioRepository;
 import com.mvalentin.usuario.infrastructure.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,7 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
+    private final EnderecoRepository enderecoRepository;
 
 
     // Método simples com retorno de status code 200
@@ -51,19 +54,22 @@ public class UsuarioController {
         return "Bearer " + jwtUtil.generateToken(authentication.getName());
     }
 
-
     @GetMapping
     public ResponseEntity<UsuarioDto> buscaUsuario(@RequestParam("email") String email){
         UsuarioDto dto = usuarioService.buscaUsuarioByEmail(email);
         return ResponseEntity.ok(dto);
     }
-
     @PutMapping
     public ResponseEntity<UsuarioDto> atualizaDadoUsuario(@RequestBody UsuarioDto dto,
                                                           @RequestHeader("Authorization") String token){
         return ResponseEntity.ok(usuarioService.atualizaDadosUsuario(token,dto));
     }
 
+    @PutMapping("/endereco")
+    public ResponseEntity<EnderecoDto> atualizaEndereco(@RequestBody EnderecoDto enderecoDto,
+                                                        @RequestParam("id") Long id){
+        return ResponseEntity.ok(usuarioService.atualizaDadosEndereco(id,enderecoDto));
+    }
     @DeleteMapping("/{email}")
     public ResponseEntity<Void> deletaUsuarToEmail(@PathVariable String email){
        usuarioService.deletaUsuarioByEmail(email);
