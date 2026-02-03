@@ -2,8 +2,10 @@ package com.mvalentin.usuario.controller;
 
 import com.mvalentin.usuario.business.UsuarioService;
 import com.mvalentin.usuario.business.dto.EnderecoDto;
+import com.mvalentin.usuario.business.dto.TelefoneDto;
 import com.mvalentin.usuario.business.dto.UsuarioDto;
 import com.mvalentin.usuario.infrastructure.repository.EnderecoRepository;
+import com.mvalentin.usuario.infrastructure.repository.TelefoneRepository;
 import com.mvalentin.usuario.infrastructure.repository.UsuarioRepository;
 import com.mvalentin.usuario.infrastructure.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ public class UsuarioController {
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
     private final EnderecoRepository enderecoRepository;
+    private final TelefoneRepository telefoneRepository;
 
 
     // Método simples com retorno de status code 200
@@ -70,6 +73,14 @@ public class UsuarioController {
                                                         @RequestParam("id") Long id){
         return ResponseEntity.ok(usuarioService.atualizaDadosEndereco(id,enderecoDto));
     }
+
+    @PutMapping("/telefone")
+    public ResponseEntity<TelefoneDto> atualizaTelefone(@RequestBody TelefoneDto telefoneDto,
+                                                        @RequestParam("id") Long id){
+        return ResponseEntity.ok(usuarioService.atualizaDadosTelefone(id,telefoneDto));
+    }
+
+
     @DeleteMapping("/{email}")
     public ResponseEntity<Void> deletaUsuarToEmail(@PathVariable String email){
        usuarioService.deletaUsuarioByEmail(email);
