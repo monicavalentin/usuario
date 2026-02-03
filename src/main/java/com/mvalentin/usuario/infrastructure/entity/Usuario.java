@@ -12,8 +12,8 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Builder
+@Entity
 @Table(name = "usuario")
 public class Usuario implements UserDetails {
 
@@ -35,7 +35,6 @@ public class Usuario implements UserDetails {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "usuario_id", referencedColumnName = "id" )
     private List<Telefone> telefones;
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

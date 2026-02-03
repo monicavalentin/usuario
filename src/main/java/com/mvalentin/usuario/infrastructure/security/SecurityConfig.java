@@ -44,6 +44,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/auth").permitAll()
                         .requestMatchers(HttpMethod.POST, "/usuario").permitAll()
                         .requestMatchers(HttpMethod.POST, "/usuario/login").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/usuario/**").authenticated() // Libera o PUT
                         .requestMatchers("/usuario/**").authenticated()
                         .anyRequest().authenticated()
                 )
