@@ -149,4 +149,12 @@ public class UsuarioConverter {
                 .estado(enderecoDto.getEstado() != null ? enderecoDto.getEstado() : endereco.getEstado())
                 .build();
     }
+
+    public Telefone updateTelefone(TelefoneDto telefoneDto, Telefone telefone){
+        return Telefone.builder()
+                .id(telefone.getId())
+                .ddd(telefoneDto.getDdd() != null ? telefoneDto.getDdd() : telefone.getDdd())
+                .numero(telefoneDto.getNumero() != null ? telefoneDto.getNumero() : telefone.getNumero())
+                .build();
+    }
  }
