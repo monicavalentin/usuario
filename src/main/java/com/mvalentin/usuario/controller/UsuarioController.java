@@ -52,6 +52,12 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.cadastraEndereco(token,enderecoDto));
     }
 
+    @PostMapping("/telefone")
+    public  ResponseEntity<TelefoneDto> cadastraTelefone(@RequestBody TelefoneDto telefoneDto,
+                                                         @RequestHeader("Authorization") String token){
+        return ResponseEntity.ok(usuarioService.cadastraTelefone(token,telefoneDto));
+    }
+
     // Criação  do método  de login
 
     @PostMapping("/login")
@@ -85,7 +91,6 @@ public class UsuarioController {
                                                         @RequestParam("id") Long id){
         return ResponseEntity.ok(usuarioService.atualizaDadosTelefone(id,telefoneDto));
     }
-
 
     @DeleteMapping("/{email}")
     public ResponseEntity<Void> deletaUsuarToEmail(@PathVariable String email){

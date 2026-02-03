@@ -162,7 +162,7 @@ public class UsuarioConverter {
     }
 
     // ##############################################################################
-    //         ### Seção 4 Conversões de Endereço e Telefone de Dto para Entity  ###
+    //         ### Seção 4 -  Conversões de Endereço e Telefone de Dto para Entity  ###
     // ###############################################################################
 
     public Endereco toEnderecoEntity(EnderecoDto enderecoDto, Long idUsuario) {
@@ -173,6 +173,14 @@ public class UsuarioConverter {
                 .complemento(enderecoDto.getComplemento())
                 .cep(enderecoDto.getCep())
                 .estado(enderecoDto.getEstado())
+                .usuario_id(idUsuario)
+                .build();
+    }
+
+    public Telefone toTelefoneEntity(TelefoneDto telefoneDto, Long idUsuario ){
+        return Telefone.builder()
+                .ddd(telefoneDto.getDdd())
+                .numero(telefoneDto.getNumero())
                 .usuario_id(idUsuario)
                 .build();
     }
