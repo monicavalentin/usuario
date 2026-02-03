@@ -4,6 +4,7 @@ import com.mvalentin.usuario.business.UsuarioService;
 import com.mvalentin.usuario.business.dto.EnderecoDto;
 import com.mvalentin.usuario.business.dto.TelefoneDto;
 import com.mvalentin.usuario.business.dto.UsuarioDto;
+import com.mvalentin.usuario.infrastructure.entity.Endereco;
 import com.mvalentin.usuario.infrastructure.repository.EnderecoRepository;
 import com.mvalentin.usuario.infrastructure.repository.TelefoneRepository;
 import com.mvalentin.usuario.infrastructure.repository.UsuarioRepository;
@@ -44,6 +45,11 @@ public class UsuarioController {
 
         // 2. RETORNA A RESPOSTA: Com o objeto que o Service processou e salvou
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioSalvo);
+    }
+    @PostMapping("/endereco")
+    public  ResponseEntity<EnderecoDto> cadastraEndereco(@RequestBody EnderecoDto enderecoDto,
+                                                         @RequestHeader("Authorization") String token){
+        return ResponseEntity.ok(usuarioService.cadastraEndereco(token,enderecoDto));
     }
 
     // Criação  do método  de login
@@ -86,4 +92,5 @@ public class UsuarioController {
        usuarioService.deletaUsuarioByEmail(email);
        return ResponseEntity.noContent().build(); // Retorna 204 - Indica que a requisição foi processada com sucesso.
     }
+
 }

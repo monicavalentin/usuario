@@ -19,7 +19,7 @@ public class UsuarioConverter {
     // #############################################################//
 
 
-    public Usuario toUsuario(UsuarioDto usuarioDto){
+    public Usuario toUsuario(UsuarioDto usuarioDto) {
         return Usuario.builder()
                 .nome(usuarioDto.getNome())
                 .email(usuarioDto.getEmail())
@@ -30,19 +30,19 @@ public class UsuarioConverter {
     }
 
     /**
-     *  * Converte uma lista de "enderecoDtos"  para uma lista "enderecoEntity".
+     * * Converte uma lista de "enderecoDtos"  para uma lista "enderecoEntity".
      * Utiliza o fluxo de Streams para mapear cada item individualmente.
      */
-    public List<Endereco> toListEndereco(List<EnderecoDto> enderecosDtos){
+    public List<Endereco> toListEndereco(List<EnderecoDto> enderecosDtos) {
         if (enderecosDtos == null) return Collections.emptyList(); //Se a lista for nula, retorne uma lista vazia
-        return enderecosDtos.stream().map(this:: toEndereco).toList();
+        return enderecosDtos.stream().map(this::toEndereco).toList();
     }
 
     /**
      * Converte um único objeto EnderecoDto para um objeto Endereco.
      * Usa o padrão Builder para criar o objeto de forma clara e segura.
      */
-    public Endereco toEndereco(EnderecoDto enderecoDto){
+    public Endereco toEndereco(EnderecoDto enderecoDto) {
         return Endereco.builder()
                 .rua(enderecoDto.getRua())
                 .numero(enderecoDto.getNumero())
@@ -54,16 +54,16 @@ public class UsuarioConverter {
     }
 
     /**
-     *  * Converte uma lista de "telefoneDtos"  para uma lista "telefoneEntity".
+     * * Converte uma lista de "telefoneDtos"  para uma lista "telefoneEntity".
      * Utiliza o fluxo de Streams para mapear cada item individualmente.
      */
 
-    public List<Telefone> toListTelefone(List<TelefoneDto> telefoneDtos){
+    public List<Telefone> toListTelefone(List<TelefoneDto> telefoneDtos) {
         if (telefoneDtos == null) return Collections.emptyList(); //Se a lista for nula, retorne uma lista vazia
-        return telefoneDtos.stream().map(this:: toTelefone).toList();
+        return telefoneDtos.stream().map(this::toTelefone).toList();
     }
 
-    public  Telefone toTelefone(TelefoneDto telefoneDto) {
+    public Telefone toTelefone(TelefoneDto telefoneDto) {
         return Telefone.builder()
                 .ddd(telefoneDto.getDdd())
                 .numero(telefoneDto.getNumero())
@@ -74,7 +74,7 @@ public class UsuarioConverter {
     //         ### Seção 2: CONVERSÃO ENTITY PARA DTO ###
     // #############################################################
 
-    public UsuarioDto toUsuarioDto(Usuario usuario){
+    public UsuarioDto toUsuarioDto(Usuario usuario) {
         return UsuarioDto.builder()
                 .nome(usuario.getNome())
                 .email(usuario.getEmail())
@@ -87,14 +87,15 @@ public class UsuarioConverter {
     /**
      * Recebe uma lista de entidades endereço e transforma em uma lista de enderecoDto.
      */
-    public List<EnderecoDto> toListEnderecoDto(List<Endereco> enderecos){
+    public List<EnderecoDto> toListEnderecoDto(List<Endereco> enderecos) {
         if (enderecos == null) return Collections.emptyList(); //Se a lista for nula, retorne uma lista vazia
         return enderecos.stream().map(this::toEnderecoDto).toList();
     }
+
     /**
      * Converte uma única entidade Endereco para EnderecoDto.
      */
-    public EnderecoDto toEnderecoDto(Endereco endereco){
+    public EnderecoDto toEnderecoDto(Endereco endereco) {
         return EnderecoDto.builder()
                 .id(endereco.getId())
                 .rua(endereco.getRua())
@@ -105,18 +106,20 @@ public class UsuarioConverter {
                 .estado(endereco.getEstado())
                 .build();
     }
+
     /**
      * Recebe uma lista de entidades Telefone e transforma em uma lista de TelefoneDTO.
      */
 
-    public List<TelefoneDto> toListTelefoneDto(List<Telefone> telefones){
+    public List<TelefoneDto> toListTelefoneDto(List<Telefone> telefones) {
         if (telefones == null) return Collections.emptyList(); //Se a lista for nula, retorne uma lista vazia
         return telefones.stream().map(this::toTelefoneDto).toList();
     }
+
     /**
      * Converte uma única entidade Telefone para TelefoneDTO.
      */
-    public TelefoneDto toTelefoneDto(Telefone telefone){
+    public TelefoneDto toTelefoneDto(Telefone telefone) {
         return TelefoneDto.builder()
                 .ddd(telefone.getDdd())
                 .numero(telefone.getNumero())
@@ -127,7 +130,7 @@ public class UsuarioConverter {
     //         ### Seção 3: Faz as comprações dos campos antes de atualiar     ###
     // ############################################################################
 
-    public Usuario updateUsuario(UsuarioDto usuarioDto, Usuario usuario){
+    public Usuario updateUsuario(UsuarioDto usuarioDto, Usuario usuario) {
         return Usuario.builder()
                 .nome(usuarioDto.getNome() != null ? usuarioDto.getNome() : usuario.getNome())
                 .id(usuario.getId())// como o Id dificilmente irá alterar então eu vou pegar direto da entity
@@ -138,7 +141,7 @@ public class UsuarioConverter {
                 .build();
     }
 
-    public Endereco updateEndereco(EnderecoDto enderecoDto, Endereco endereco){
+    public Endereco updateEndereco(EnderecoDto enderecoDto, Endereco endereco) {
         return Endereco.builder()
                 .id(endereco.getId())
                 .rua(enderecoDto.getRua() != null ? enderecoDto.getRua() : endereco.getRua())
@@ -150,11 +153,27 @@ public class UsuarioConverter {
                 .build();
     }
 
-    public Telefone updateTelefone(TelefoneDto telefoneDto, Telefone telefone){
+    public Telefone updateTelefone(TelefoneDto telefoneDto, Telefone telefone) {
         return Telefone.builder()
                 .id(telefone.getId())
                 .ddd(telefoneDto.getDdd() != null ? telefoneDto.getDdd() : telefone.getDdd())
                 .numero(telefoneDto.getNumero() != null ? telefoneDto.getNumero() : telefone.getNumero())
                 .build();
     }
- }
+
+    // ##############################################################################
+    //         ### Seção 4 Conversões de Endereço e Telefone de Dto para Entity  ###
+    // ###############################################################################
+
+    public Endereco toEnderecoEntity(EnderecoDto enderecoDto, Long idUsuario) {
+        return Endereco.builder()
+                .rua(enderecoDto.getRua())
+                .numero(enderecoDto.getNumero())
+                .cidade(enderecoDto.getCidade())
+                .complemento(enderecoDto.getComplemento())
+                .cep(enderecoDto.getCep())
+                .estado(enderecoDto.getEstado())
+                .usuario_id(idUsuario)
+                .build();
+    }
+}
