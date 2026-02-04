@@ -42,7 +42,6 @@ O projeto aplica **Clean Architecture Pragmática**, garantindo que as regras de
 * **`repository`** | Interfaces de acesso ao banco de dados.
 * **`exceptions`** | Gestão de erros com `GlobalExceptionHandler`.
 * **`security`** | Filtros JWT e configurações de contexto de segurança.
-
 ---
 
 ## 🔄 3. Fluxo de Dados (Workflow)
@@ -57,3 +56,21 @@ O fluxo abaixo ilustra a jornada de uma requisição desde o BFF até o banco de
 6. **Controller** devolve o `UsuarioResponseDTO` com Status `201 Created`.
 
 ---
+
+### 🏗️ Débito Técnico: `melhorias futuras:`
+
+### 🛠️ Refatoração para Clean Architecture Purista
+
+
+[ ] Criar o pacote business.usecases para isolar as regras de negócio.
+
+[ ] Migrar lógica da UsuarioService para classes específicas (ex: SalvarUsuarioUseCase, CadastrarEnderecoUseCase).
+
+[ ] Implementar verificarEmailExiste como regra de validação interna do UseCase de salvamento.
+
+[ ] Adaptar o UsuarioController para injetar UseCases específicos em vez da Service genérica.
+
+### 🛠️ Fase 2: Infraestrutura & Qualidade
+[ ] Integrar Swagger/OpenAPI para documentação interativa dos endpoints.
+
+[ ] Implementar testes unitários com JUnit 5 e Mockito para os UseCases.
