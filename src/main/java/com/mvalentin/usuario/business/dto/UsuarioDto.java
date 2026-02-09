@@ -1,6 +1,5 @@
 package com.mvalentin.usuario.business.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.util.List;
