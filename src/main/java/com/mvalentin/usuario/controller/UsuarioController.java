@@ -4,7 +4,6 @@ import com.mvalentin.usuario.business.UsuarioService;
 import com.mvalentin.usuario.business.dto.EnderecoDto;
 import com.mvalentin.usuario.business.dto.TelefoneDto;
 import com.mvalentin.usuario.business.dto.UsuarioDto;
-import com.mvalentin.usuario.infrastructure.entity.Endereco;
 import com.mvalentin.usuario.infrastructure.repository.EnderecoRepository;
 import com.mvalentin.usuario.infrastructure.repository.TelefoneRepository;
 import com.mvalentin.usuario.infrastructure.repository.UsuarioRepository;
