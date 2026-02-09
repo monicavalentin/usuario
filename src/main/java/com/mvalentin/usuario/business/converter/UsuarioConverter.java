@@ -78,6 +78,7 @@ public class UsuarioConverter {
         return UsuarioDto.builder()
                 .nome(usuario.getNome())
                 .email(usuario.getEmail())
+                .senha(usuario.getSenha())
                 .enderecos(toListEnderecoDto(usuario.getEnderecos()))
                 .telefones(toListTelefoneDto(usuario.getTelefones()))
                 .build();
