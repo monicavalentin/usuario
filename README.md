@@ -57,7 +57,7 @@ O fluxo abaixo ilustra a jornada de uma requisição desde o BFF até o banco de
 
 ---
 
-### 🏗️ Débito Técnico: `melhorias futuras:`
+### 🏗️ Débito Técnico:
 
 ### 🛠️ Refatoração para Clean Architecture Purista
 
