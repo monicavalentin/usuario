@@ -92,7 +92,7 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{email}")
-    public ResponseEntity<Void> deletaUsuarToEmail(@PathVariable String email){
+    public ResponseEntity<Void> deletaUsuarPorEmail(@PathVariable String email){
        usuarioService.deletaUsuarioByEmail(email);
        return ResponseEntity.noContent().build(); // Retorna 204 - Indica que a requisição foi processada com sucesso.
     }
