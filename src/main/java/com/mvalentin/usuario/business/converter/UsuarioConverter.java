@@ -122,6 +122,7 @@ public class UsuarioConverter {
      */
     public TelefoneDto toTelefoneDto(Telefone telefone) {
         return TelefoneDto.builder()
+                .id(telefone.getId())
                 .ddd(telefone.getDdd())
                 .numero(telefone.getNumero())
                 .build();
