@@ -57,6 +57,33 @@ O fluxo abaixo ilustra a jornada de uma requisição desde o BFF até o banco de
 
 ---
 
+## 🛡️ 4.  Segurança e Boas Práticas (GitGuardian)
+
+Para garantir a integridade do projeto e evitar a exposição acidental de credenciais ou dados sensíveis (PII), utilizamos o **GitGuardian CLI (ggshield)**. É altamente recomendável validar suas alterações localmente antes de realizar qualquer `push`.
+
+## 📋 Pré-requisitos
+1. **Instalação (via Pip):**
+```bash
+   pip install ggshield
+```
+
+2. Autenticação:
+```bash
+   ggshield auth login
+```
+### 🔍 Comandos de Varredura Local
+Utilize os comandos abaixo no terminal para validar seu código:
+
+| Objetivo | Comando |
+| :--- | :--- |
+| Validar arquivos no Stage | `ggshield secret scan pre-commit` |
+| Validar todo o repositório | `ggshield secret scan path .` |
+| Validar o último commit | `ggshield secret scan commit` |
+
+**Lembrente:** O GitGuardian irá bloquear o build na esteira de CI se detectar que estas variáveis foram inseridas diretamente no código ou em arquivos de propriedades sem proteção.
+
+---
+
 ### 🏗️ Débito Técnico:
 
 ### 🛠️ Refatoração para Clean Architecture Purista
