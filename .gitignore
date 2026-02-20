@@ -4,6 +4,11 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+target/
+
+### Environment Variables & Secrets ###
+# Contém credenciais locais (DB, API Keys). NUNCA versionar!
+.env
 
 ### STS ###
 .apt_generated
@@ -35,3 +40,9 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Pre-commit cache
+.pre-commit-cache/
+
+### Logs
+*.log
