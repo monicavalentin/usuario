@@ -8,6 +8,7 @@ import com.mvalentin.usuario.infrastructure.repository.EnderecoRepository;
 import com.mvalentin.usuario.infrastructure.repository.TelefoneRepository;
 import com.mvalentin.usuario.infrastructure.repository.UsuarioRepository;
 import com.mvalentin.usuario.infrastructure.security.JwtUtil;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.TimeZone;
 
 @RestController
 @RequestMapping("/usuario")
@@ -28,7 +31,6 @@ public class UsuarioController {
     private final EnderecoRepository enderecoRepository;
     private final TelefoneRepository telefoneRepository;
 
-
     // Método simples com retorno de status code 200
    /* @PostMapping
     public ResponseEntity<UsuarioDto> salvaUsuario(@RequestBody UsuarioDto usuarioDto){
@@ -36,6 +38,7 @@ public class UsuarioController {
     }*/
 
     // Método  com retorno de status code 201 created que é o correto para salvar usuário
+
 
     @PostMapping
     public ResponseEntity<UsuarioDto> salvaUsuario(@RequestBody UsuarioDto usuarioDto) {
