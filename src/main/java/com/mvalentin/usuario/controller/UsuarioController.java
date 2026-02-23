@@ -1,14 +1,20 @@
 package com.mvalentin.usuario.controller;
 
 import com.mvalentin.usuario.business.UsuarioService;
+import com.mvalentin.usuario.business.ViaCepService;
 import com.mvalentin.usuario.business.dto.EnderecoDto;
 import com.mvalentin.usuario.business.dto.TelefoneDto;
 import com.mvalentin.usuario.business.dto.UsuarioDto;
+import com.mvalentin.usuario.infrastructure.clients.ViaCepDto;
 import com.mvalentin.usuario.infrastructure.repository.EnderecoRepository;
 import com.mvalentin.usuario.infrastructure.repository.TelefoneRepository;
 import com.mvalentin.usuario.infrastructure.repository.UsuarioRepository;
 import com.mvalentin.usuario.infrastructure.security.JwtUtil;
-import jakarta.annotation.PostConstruct;
+import com.mvalentin.usuario.infrastructure.security.SecurityConfig;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +23,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.TimeZone;
-
 @RestController
 @RequestMapping("/usuario")
 @RequiredArgsConstructor
+@Tag(name = "Usuário", description = "Cadastra Usuários")
+@SecurityRequirement(name = SecurityConfig.SECURITY_SCHEME)
 public class UsuarioController {
 
     private final UsuarioRepository usuarioRepository;
@@ -30,6 +36,7 @@ public class UsuarioController {
     private final JwtUtil jwtUtil;
     private final EnderecoRepository enderecoRepository;
     private final TelefoneRepository telefoneRepository;
+    private final ViaCepService viaCepService;
 
     // Método simples com retorno de status code 200
    /* @PostMapping
@@ -98,6 +105,14 @@ public class UsuarioController {
     public ResponseEntity<Void> deletaUsuarPorEmail(@PathVariable String email){
        usuarioService.deletaUsuarioByEmail(email);
        return ResponseEntity.noContent().build(); // Retorna 204 - Indica que a requisição foi processada com sucesso.
+    }
+
+    @GetMapping("/endereco/{cep}")
+    @Operation(summary = "Busca dados de endereço utilizando api ViaCep" , description = "Rucepera dados  endereço")
+    @ApiResponse(responseCode = "200", description = "Tarefa salva com sucesso")
+    @ApiResponse(responseCode = "500", description = "Erro de servidor")
+    public ResponseEntity<ViaCepDto> buscarDadosEndereco(@PathVariable("cep") String cep){
+        return ResponseEntity.ok(viaCepService.buscarDadosEndereco(cep));
     }
 
 }
