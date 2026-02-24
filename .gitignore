@@ -46,3 +46,6 @@ out/
 
 ### Logs
 *.log
+
+### arquivo que contém senhas de acesso ao banco
+*.env
